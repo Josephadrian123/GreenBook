@@ -19,6 +19,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-img">
+                           
                             <img src="{{ $user['foto'] }}" alt=""/>
                             @if($user['id'] == Auth::id())
                             <span data-toggle="modal" data-target="#changePhoto" class="file btn btn-lg btn-success col-md-4">
@@ -44,15 +45,21 @@
                             <form method="post" enctype="multipart/form-data" action="{{ route('updatePhoto', $user) }}">
                                
                                 @csrf
-                                <input class="btn btn-outline-success" data-container-upload = "inputfile" type="file" name="imagem"/>
+
+                                <input class="btn btn-sm btn-outline-success" data-container-upload = "inputfile" type="file" name="imagem"/>
+                                <br>
+                                <br>
+                                <a href="{{ route('removePhoto') }}" class="removeFile btn btn-outline-danger">Remove Photo</a>
+                                
                                 
                                
                                 
                                 </div>
                                 <div class="modal-footer">
                             <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
-                            <button type="sumbit" class="btn btn-outline-success">Save</button>
+                            <button type="submit" class="btn btn-outline-success">Save</button>
                             </form>
+                        
                         </div>
                         </div>
                         </div>
@@ -86,7 +93,7 @@
                     
                     </div>
                     
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <div class="profile-head">
                                     <h5>
                                     {{ $user['name'] }}
@@ -96,24 +103,26 @@
                                     </h6>
                                     
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                <li class="nav-item  col-4">
+                                    <a class="nav-link row" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+                                <li class="nav-item  col-4">
+                                    <a class="nav-link row active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="plantas-tab" data-toggle="tab" href="#plantas" role="tab" aria-controls="plantas" aria-selected="false">Plants</a>
+                                <li class="nav-item  col-4">
+                                    <a class="nav-link row" id="plantas-tab" data-toggle="tab" href="#plantas" role="tab" aria-controls="plantas" aria-selected="false">Plants</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     @if($user['id'] == Auth::id())
-                    <div class="col-md-3">
-                        <a class="nav-link profile-edit-btn" name="btnAddMore" data-toggle="modal" data-target="#ModalEdit"> Edit Profile <img src="{{asset('../resources/img/gear.png')}}" style="height: 30px"></a>
+                    <div class="col-md-2 bg-white">
+                        <button class="btn btn-outline-success" name="btnAddMore" data-toggle="modal" data-target="#ModalEdit" style="text-align: center"> Edit Profile</button>
                          
                         
                     </div>
+                    <br>
+                    <br>
                     @endif
                 </div>
 
@@ -168,6 +177,21 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('New Password') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="current-password">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+
                     
 
                     
@@ -187,7 +211,7 @@
                     </div>
                     <div class="col-md-8">
                         <div class="tab-content profile-tab" id="myTabContent">
-                            <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="tab-pane fade info-tab" id="home" role="tabpanel" aria-labelledby="home-tab">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label>User Id</label>
@@ -226,35 +250,119 @@
                             <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                        
 
-                                       @if (!$user->posts()->count())
-                                       <div class="row col-md-10 justify-content-center">
+                                       
+                                       @if($user['id'] == Auth::id())
+                                       <div class="row col">
+                                        <button class="btn btn-outline-success" data-toggle="modal" data-target="#modalPost">New Post</button>
+                                        </div>
+                                        <br>
+                                        
+                                        
+                                        @endif
+                                        
+                                        
+                                        <div class="modal fade" id="modalPost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">New Post</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                <form method="post" enctype="multipart/form-data" action="{{ route('profile.store') }}">
+                                                
+                                                @csrf
+                                                <div class="form-group row">
+                                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Text') }}</label>
+
+                                                <div class="col-md-6">
+                                                    <input type="text" id="name" class="form-control"  name="text"></input>
+                                                </div>
+                                                <br>
+                                                <br>
+                                                <label for="file" class="col-md-4 col-form-label text-md-right">{{ __('Photo') }}</label>
+                                                <div class="col-md-6">
+                                                <input id="file" class="btn btn-sm btn-outline-success" data-container-upload = "inputfile" type="file" name="media"/>
+                                                </div>
+                                
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-outline-success">Save</button>
+                                                    </form>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                            @if (!$user->posts()->count())
+                                       <div class="row col-md-8 justify-content-center">
                                             <h3>No posts yet :(</h3>
                                        </div>
                                        @endif
-                                     
+
                                        @foreach ( $posts as $post)
                                            @if (!empty($post['media']))
-                                                    <div class='card card-post col-md-9'>
-                                                    <div class='card-header row'><div class='row col-md-4'><img src="{{ $user['foto'] }}">&nbsp;<a class='nav-link titulo row' href="profile?id={{$user['id']}}" style='border: none; outline-style: none;'>{{$user['name']}}</a></div></div>
-                                                    {{ $post['text'] }}
-                                                    <div class='row card-content'>
-                                                    <img src="{{ $post['media'] }}" style='width: 485px;'>
+                                                    
+                                                    <div class='card card-post col'>
+                                                    <div class='card-header row'>
+                                                        <div class='row col'>
+                                                            <img src="{{ $user['foto'] }}">
+                                                            
+                                                            <a class='nav-link titulo' href="profile?id={{$user['id']}}" style='border: none; outline-style: none;'>{{$user['name']}}</a>
+                                                            
+                                                        </div>
+                                                        @if(Auth::id() == $user['id'])
+                                                        <div class="ml-3">
+                                                            <form method="post" action="{{ route('removePost') }}">
+                                                            @csrf
+                                                            <input type="hidden" name='id' value="{{ $post['id'] }}"/>
+                                                            <button type="submit" class="close" data-dismiss="modal" aria-label="Fechar">
+                                                            <span aria-hidden="true">&times;</span>  </button>
+                                                            </form>
+                                                        </div>
+                                                        @endif
+                                                    </div>
+                                                    <div class=" card-legend">{{ $post['text'] }}</div>
+                                                    <div class='card-content row'>
+                                                    <img src="{{ $post['media'] }}" style='width: 100%;'>
                                                     </div>
                                                     <div class='card-footer row'>
+                                                
                                         aq eh o footer ok
                                         </div>
                                                 </div>
+                                                
                                                 <br>
                                            
                                            
                                             @else
-                                        <div class='card col-md-9 card-post'>
-                                        <div class='card-header row'><div class='row col-md-4'><img src=" {{ $user['foto'] }}">&nbsp;<a class='nav-link titulo row' href="profile?id={{$user['id']}}" style='border: none; outline-style: none;'>{{ $user['name']}}</a></div></div>
-                                        {{ $post['text'] }}
+                                        
+                                        <div class='card col card-post'>
+                                        <div class='card-header row'>
+                                            <div class='row col'>
+                                                <img src=" {{ $user['foto'] }}">
+                                                <a class='nav-link titulo' href="profile?id={{$user['id']}}" style='border: none; outline-style: none;'>{{ $user['name']}}</a>
+                                            </div>
+                                            @if(Auth::id() == $user['id'])
+                                            <div class="ml-3">
+                                                <form method="post" action="{{ route('removePost') }}">
+                                                    @csrf
+                                                    <input type="hidden" name='id' value="{{ $post['id'] }}"/>
+                                                    <button type="submit" class="close" data-dismiss="modal" aria-label="Fechar">
+                                                    <span aria-hidden="true">&times;</span>  </button>
+                                                </form>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <div class="">{{ $post['text'] }}</div>
                                         <div class='card-footer row'>
                                         aq eh o footer ok
                                         </div>
                                     </div>
+                                    
                                     <br>
                                             @endif
                                
@@ -264,9 +372,14 @@
                                        
                             </div>
                             <div class="tab-pane fade" id="plantas" role="tabpanel" aria-labelledby="plantas-tab">
-                                <div class="row offset-8">
+                                @if($user['id'] == Auth::id())
+                                <div class="row col-md-4">
+                                
                                     <button class="btn btn-outline-success" data-toggle="modal" data-target="#modalPlant">New Plant</button>
+                                
                                 </div>
+                                <br>
+                                @endif
 
                                 <div class="modal fade" id="modalPlant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -278,15 +391,17 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                        <form method="post" enctype="multipart/form-data" action="">
+                                        <form method="post" enctype="multipart/form-data" action="{{ route('addPlant') }}">
                                         
                                         @csrf
                                         <div class="form-group row">
                                         <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                                         <div class="col-md-6">
-                                            <input type="text" id="name"  name="name"></input>
+                                            <input class="form-control" type="text" maxlength="16" id="name"  name="name"></input>
                                         </div>
+                                        <br>
+                                        <br>
                                         <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Photo') }}</label>
                                         <div class="col-md-6">
                                         <input class="btn btn-sm btn-outline-success" data-container-upload = "inputfile" type="file" name="media"/>
@@ -307,12 +422,55 @@
                                         </div>
                                     </div>
                                     </div>
-
+                            
                             </div>
+                            @if (!$user->plants()->count())
+                                       <div class="row col-md-8 justify-content-center">
+                                            <h3>No plants yet :(</h3>
+                                       </div>
+                                       @endif
+                                       <div class="row col-md-12">
+                                       @foreach ( $plants as $plant)
+                                                    
+                                                    <div class='card card-post col-md-5'>
+                                                    <div class='card-header row'>
+                                                    <div class="row ml-auto">
+                                                    <a class='nav-link titulo row' href="#" style='border: none; outline-style: none;'>{{$plant['name']}}</a>
+                                                    </div>
+                                                    
+                                                    <div class=" ml-auto mb-auto">
+                                                    @if(Auth::id() == $user['id'])
+                                                            <form method="post" action="{{ route('removePlant') }}">
+                                                            @csrf 
+                                                            <input type="hidden" value="{{ $plant['id'] }}" name="id"/>
+                                                            <button type="submit" class="close" data-dismiss="modal" aria-label="Fechar">
+                                                            <span aria-hidden="true">&times;</span>  </button>
+                                                            </form>
+                                                    @endif
+                                                    </div>
+                                                    
+                                                    </div>
+                                                    
+                                                    
+                                                    <div class='row card-content justify-content-center'>
+                                                    <img src="{{ $plant['media'] }}" style='width: 100%;'>
+                                                    </div>
+                                                    
+                                                </div>
+                                                &nbsp;
+                                                
+                                           
+                                           
+                                           
+                                            
+                               
+                                       
+                                       @endforeach
+                                        </div>
                         </div>
                     </div>
                 </div>
-                     
+                    
         </div>
                    
                 </div>

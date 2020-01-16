@@ -27,34 +27,37 @@ class HomeController extends Controller
     public function index()
     {
         
-        $user = User::where('id', Auth::id())->first();
+        $user = Auth::user();
+        $ids = [$user->id];
+        $arr = $user->followeds()->get();
+        foreach($arr as $value){
+            array_push($ids, $value->id);
+        }
+        
+        $posts = Post::whereIn('user_id', $ids)->latest()->get();
         
         
-        return view('home')->with('user', $user);
+        
+        return view('home', ['user' => $user, 'posts' => $posts]);
     }
 
     public function store(Request $request)
     {
+        $post = new Post;
+        $post->user_id = Auth::id();
+        $post->text = $request->input('text');
+
         if(!empty($_FILES["media"]["tmp_name"])){
-        $nome_temporario=$_FILES["media"]["tmp_name"];
-        $nome_real=$_FILES["media"]["name"];
-        copy($nome_temporario,"./../resources/img/posts/$nome_real");
-        $caminho = "./../resources/img/posts/$nome_real";
+            $nome_temporario=$_FILES["media"]["tmp_name"];
+            $nome_real=$_FILES["media"]["name"];
+            copy($nome_temporario,"./../resources/img/posts/$nome_real");
+            $caminho = "./../resources/img/posts/$nome_real";
 
-        $arr = array(
-            "user_id" => Auth::id(),
-            "text" => $request->input('text'),
-            "media" => $caminho,
-
-        );
-    }else{
-        $arr = array(
-            "user_id" => Auth::id(),
-            "text" => $request->input('text'),
-
-        );
-    }
-        Post::create($arr);
+            $post->media = $caminho;
+        }    
+            
+            $post->save();
+            Auth::user()->posts()->save($post);
 
         return redirect(route('home'));
 

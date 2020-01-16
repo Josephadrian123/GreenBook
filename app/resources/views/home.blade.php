@@ -38,7 +38,7 @@
                             </div>
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Photo') }}</label>
                             <div class="col-md-6">
-                               <input class="" data-container-upload = "inputfile" type="file" name="media"/>
+                               <input class="btn btn-sm btn-outline-success" data-container-upload = "inputfile" type="file" name="media"/>
                             </div>
                                
                               
@@ -56,8 +56,76 @@
                             </div>
                         </div>
                         </div>
-                   
+                
                 </div>
+                <br>
+                <br>
+                <div class="col justify-content-center">
+                    @foreach($posts as $post)
+                    @if (!empty($post['media']))
+                                                    
+                                                    <div class='card card-post col'>
+                                                    <div class='card-header row'>
+                                                        <div class='row col'>
+                                                            <img src="{{ App\User::where('id', $post['user_id'])->get()->first()['foto'] }}">
+                                                        
+                                                            <a class='nav-link titulo' href="profile?id={{App\User::where('id', $post['user_id'])->get()->first()['id']}}" style='border: none; outline-style: none;'>{{App\User::where('id', $post['user_id'])->get()->first()['name']}}</a>
+                                                            
+                                                        </div>
+                                                        @if(Auth::id() == App\User::where('id', $post['user_id'])->get()->first()['id'])
+                                                        <div class="ml-3">
+                                                            <form method="post" action="{{ route('removePost') }}">
+                                                            @csrf
+                                                            <input type="hidden" name='id' value="{{ $post['id'] }}"/>
+                                                            <button type="submit" class="close" data-dismiss="modal" aria-label="Fechar">
+                                                            <span aria-hidden="true">&times;</span>  </button>
+                                                            </form>
+                                                        </div>
+                                                        @endif
+                                                    </div>
+                                                    <div class=" card-legend">{{ $post['text'] }}</div>
+                                                    <div class='card-content row'>
+                                                    <img src="{{ $post['media'] }}" style='width: 100%;'>
+                                                    </div>
+                                                    <div class='card-footer row'>
+                                                
+                                        aq eh o footer ok
+                                        </div>
+                                                </div>
+                                                
+                                                <br>
+                                           
+                                           
+                                            @else
+                                        
+                                        <div class='card col card-post'>
+                                        <div class='card-header row'>
+                                            <div class='row col'>
+                                                <img src=" {{ App\User::where('id', $post['user_id'])->get()->first()['foto'] }}">
+                                                <a class='nav-link titulo' href="profile?id={{App\User::where('id', $post['user_id'])->get()->first()['id']}}" style='border: none; outline-style: none;'>{{ App\User::where('id', $post['user_id'])->get()->first()['name']}}</a>
+                                            </div>
+                                            @if(Auth::id() == App\User::where('id', $post['user_id'])->get()->first()['id'])
+                                            <div class="ml-3">
+                                                <form method="post" action="{{ route('removePost') }}">
+                                                    @csrf
+                                                    <input type="hidden" name='id' value="{{ $post['id'] }}"/>
+                                                    <button type="submit" class="close" data-dismiss="modal" aria-label="Fechar">
+                                                    <span aria-hidden="true">&times;</span>  </button>
+                                                </form>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <div class="">{{ $post['text'] }}</div>
+                                        <div class='card-footer row'>
+                                        aq eh o footer ok
+                                        </div>
+                                    </div>
+                                    
+                                    <br>
+                                            @endif
+                    @endforeach
+                </div>
+
             </div>
         </div>
     </div>

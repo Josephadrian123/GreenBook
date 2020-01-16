@@ -15,12 +15,12 @@ class CreatePlantsTable extends Migration
     {
         Schema::create('plants', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInt('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('name');
-            $table->string('media')->nullable();
+            $table->string('media')->default('./../resources/img/plants/semfoto.svg');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -11,6 +11,11 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script> 
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+    
+    
     
 
     <!-- Styles -->
@@ -25,7 +30,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white">
             <div class="container">
                 <a class="navbar-brand link" href="{{ url('/') }}">
                     {{ config('app.name', 'GreenBook') }}
@@ -47,6 +52,9 @@
                                 <input type="hidden" name="id" value="{{ Auth::id()}}"/>
                             <button  class="nav-link" style="background-color: white; border: none; outline-style: none;">Profile</button>
                             </form>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/messages') }}">Messages</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/glossary') }}">Glossary</a>
@@ -79,11 +87,50 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
+                                    <button class="dropdown-item" data-toggle="modal" data-target="#modalConfirm">
+                                        {{ __('Delete Account')}}
+                                    </button>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
+
+                                    
                                 </div>
+                                <div class="modal fade" id="modalConfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Delete Account</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                            <form method="post" action="{{ route('deleteUser')}}">
+                            @csrf
+                            <div class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Your Password') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-outline-success">Ok</button>
+                                </form>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
                             </li>
                         @endguest
                     </ul>
@@ -96,4 +143,5 @@
         </main>
     </div>
 </body>
+
 </html>

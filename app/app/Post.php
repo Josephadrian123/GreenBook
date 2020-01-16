@@ -14,6 +14,6 @@ class Post extends Model
     ];
 
     public function usuario(){
-        return $this->hasOne('User', 'id', 'user_id');
+        return $this->belongsTo('User');
     }
 }

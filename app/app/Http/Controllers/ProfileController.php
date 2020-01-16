@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Post;
+use App\Plant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -27,20 +29,23 @@ class ProfileController extends Controller
             
 
             $user = User::where('id', $id)->first();
-            $posts = $user->posts()->orderBy('id', 'desc')->get();
-            $followers = $user->followers()->orderBy('follower', 'desc')->get();
-            $followeds = $user->followeds()->orderBy('follower', 'desc')->get();
+            
 
             if($user){
-            return view('profile', ['user' => $user, 'posts' => $posts, 'followers' => $followers, 'followeds' => $followeds]);
+            $posts = $user->posts()->orderBy('id', 'desc')->get();
+            $plants = $user->plants()->orderBy('id', 'desc')->get();
+            $followers = $user->followers()->orderBy('follower', 'desc')->get();
+            $followeds = $user->followeds()->orderBy('follower', 'desc')->get();
+            return view('profile', ['user' => $user, 'posts' => $posts, 'plants' => $plants, 'followers' => $followers, 'followeds' => $followeds]);
             }else return view('unknownProfile');
         }else{
 
         $user = User::where('id', Auth::id())->first();
         $posts = Auth::user()->posts()->orderBy('id', 'desc')->get();
+        $plants = $user->plants()->orderBy('id', 'desc')->get();
         $followers = $user->followers()->orderBy('follower', 'desc')->get();
         $followeds = $user->followeds()->orderBy('follower', 'desc')->get();
-        return view('profile', ['user' => $user, 'posts' => $posts, 'followers' => $followers, 'followeds' => $followeds]);
+        return view('profile', ['user' => $user, 'posts' => $posts, 'plants' => $plants, 'followers' => $followers, 'followeds' => $followeds]);
         }
     }
 
@@ -62,8 +67,39 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post;
+        $post->user_id = Auth::id();
+
+        if(!empty($request->text)){
+        $post->text = $request->text;
+        }
+        
+        if(!empty($_FILES["media"]["tmp_name"])){
+            $nome_temporario=$_FILES["media"]["tmp_name"];
+            $nome_real=$_FILES["media"]["name"];
+            copy($nome_temporario,"./../resources/img/posts/$nome_real");
+            $caminho = "./../resources/img/posts/$nome_real";
+
+            $post->media = $caminho;
+        }    
+            if(!empty($request->text) or !empty($_FILES["media"]["tmp_name"])){
+            $post->save();
+            Auth::user()->posts()->save($post);
+            }
+    
+            return redirect(route('profile'));
     }
+
+    public function removePost(Request $request)
+    {
+
+           $post = Post::find($request->id);
+           $post->delete();
+    
+           return redirect()->back();
+    }
+
+
 
     /**
      * Display the specified resource.
@@ -95,15 +131,25 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)
-    {
+    {   
+
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email',
             'bio' => '',
-            'telefone' => '',
+        
             
         ]);
+
+    
         Auth::user()->update($validatedData);
+
+        if(!empty($request->password)){
+            $arr = array(
+                'password' => Hash::make($request->password),
+            );
+            Auth::user()->update($arr);
+            }
         
         
         return redirect(route('profile'));
@@ -130,6 +176,37 @@ class ProfileController extends Controller
         return redirect(route('profile'));
     }
 
+    public function removePhoto()
+    {
+        
+        $caminho = "./../resources/img/semfoto.svg";
+        $arr = array(
+         "foto" => $caminho,
+        );
+        Auth::user()->update($arr);
+
+        return redirect(route('profile'));
+    }
+
+    public function deleteUser(Request $request)
+    {
+        
+        $user = Auth::user();
+        if(password_verify($request->password, $user->password)){
+        $user->delete();
+        return redirect(url('/'));
+        }else{
+                echo"<script>
+                    alert('Incorrect Password');
+                history.go(-1);
+                </script>";
+                exit;
+        }
+          
+
+        
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -138,7 +215,7 @@ class ProfileController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        
     }
 
     
@@ -164,5 +241,34 @@ class ProfileController extends Controller
         return redirect(url('/profile?id='.$id));
 
 
+    }
+
+    public function addPlant(Request $request)
+    {
+        $plant = new Plant;
+        $plant->user_id = Auth::id();
+        $plant->name = $request->input('name');
+
+        if(!empty($_FILES["media"]["tmp_name"])){
+            $nome_temporario=$_FILES["media"]["tmp_name"];
+            $nome_real=$_FILES["media"]["name"];
+            copy($nome_temporario,"./../resources/img/plants/$nome_real");
+            $caminho = "./../resources/img/plants/$nome_real";
+    
+            $plant->media = $caminho;
+      
+        }
+        $plant->save();
+        return redirect()->back();
+
+    }
+
+    public function removePlant(Request $request)
+    {
+
+           $plant = Plant::find($request->id);
+           $plant->delete();
+    
+            return redirect(route('profile'));
     }
 }

@@ -3,7 +3,7 @@ body{
     
 }
 
-a{
+a:not(.removeFile){
     color: #52871d !important;
 }
 
@@ -37,31 +37,47 @@ a{
     color: #99CC66 !important;
 }
 
+.card{
+    box-shadow: 10px 10px 10px #000;
+}
+
 .card-post{
-    border: 5px groove; 
+    border: 5px solid; 
     border-color: #99CC66;
+    box-shadow: 10px 10px 10px #000;
+    
+}
+
+.border-post{
+    border: 5px solid; 
+    border-color:#52871d;
+    
 }
 
 .card-post .card-header{
     border-bottom: 5px solid; 
     border-color: #99CC66;
+    
+    
 }
 
-.card-post .card-header img{
-    border-radius: 15px; 
+.card-header img{
+    border-radius: 100%; 
     height: 30px;
     width: 30px;
     border: 1px outset #99CC66;
 }
 
-.card-post .card-content{
-    border-top: 5px solid; 
-    border-color: #99CC66;
+
+.card-post .card-legend{
+    word-break: break-all;
+    
 }
 
 .card-post .card-footer{
     border-top: 5px solid; 
-    border-color: #99CC66
+    border-color: #99CC66;
+    
 }
 
 
@@ -79,12 +95,13 @@ a{
 }
 .profile-img img{
     width: 70%;
-    height: 100%;
-    height: 220px; 
-    width:220px; 
-    border-radius: 120px;
+    
+    
+    
+    border-radius: 100%;
     border: 10px outset; 
     border-color: #99CC66;
+    box-shadow: 10px 10px 10px #000;
     
 }
 .profile-img .file {
@@ -97,6 +114,15 @@ a{
     background: #52871db8;
     cursor: pointer;
     border-radius: 30px;
+    box-shadow: 10px 10px 10px #000000b8;
+    
+
+}
+
+.removeFile{
+    
+    color: #e3342f;
+    
     
 
 }
@@ -120,17 +146,6 @@ a{
 .profile-head h6{
     color: #52871d;
 }
-.profile-edit-btn{
-    border: none;
-    border-radius: 1.5rem;
-    width: 70%;
-    padding: 2%;
-    font-weight: 600;
-    color: #52871d;
-    
-    cursor: pointer;
-}
-
 
 
 .profile-edit-btn:hover{
@@ -155,6 +170,7 @@ a{
     font-weight:600;
     border: none;
     color: #52871d;
+    text-align: center;
 }
 .profile-head .nav-tabs .nav-link.active{
     border: none;
@@ -180,8 +196,8 @@ a{
 .profile-work ul{
     list-style: none;
 }
-.profile-tab label{
-    font-weight: 600;
+.info-tab{
+    box-shadow: 5px 5px 5px #000;
 }
 .profile-tab p{
     font-weight: 600;
@@ -209,10 +225,76 @@ a{
 
 .card-header{
     word-break: break-all;
+    text-align: center;
+}
+
+.card-content{
+    border-top: 5px solid; 
+    border-color: #99CC66;
+    
+
 }
 
 .foto-circle {
     width: 30px;
     
 }
+
+.btn{
+    box-shadow: 5px 5px 5px #000;
+}
+
+.nav{
+    box-shadow: 5px 5px 5px #000;
+
+}
+
+.navbar{
+    box-shadow: 5px 5px 5px #000;
+
+}
+
+input{
+    box-shadow: 5px 5px 5px #000;
+}
+
+textarea{
+    box-shadow: 5px 5px 5px #000;
+}
+
+.chats{
+    display: grid;
+}
+
+#chat-right{
+    border-radius: 8px;
+    padding: 10px;
+    background-color: rgb(247, 253, 192);
+    box-shadow: 5px 5px 5px #000;
+    display: table;
+    margin: 10px;
+    margin-left: auto;
+}
+
+#chat-left{
+    border-radius: 8px;
+    padding: 10px;
+    background-color: rgb(163, 199, 193);
+    box-shadow: 5px 5px 5px #000;
+    display: table;
+    margin:10px;
+}
+
+.msg{
+    width: 9em;
+    word-wrap: break-word;
+}
+
+#lista{
+    overflow-y: scroll;
+    
+    height:400px;
+}
+
+
 
