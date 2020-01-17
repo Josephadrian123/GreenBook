@@ -30,13 +30,16 @@ Route::post('/follow', 'ProfileController@follow')->name('follow');
 Route::post('/unfollow', 'ProfileController@unfollow')->name('unfollow');
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::post('/addPlant', 'ProfileController@addPlant')->name('addPlant');
+Route::post('/diaryUpdate', 'DiaryController@diaryUpdate')->name('diaryUpdate');
 Route::get('/unknown_profile', 'UnknownProfileController@index')->name('unknownProfile');
 
 
 
 
 Route::get('/glossary', 'GlossaryController@index')->name('glossary');
+Route::get('/diary', 'DiaryController@index')->name('diary');
 Route::get('/messages', 'MessagesController@index')->name('messages');
 Route::get('/chat', 'ChatController@index')->name('chat');
 Route::get('/list', 'ChatController@list')->name('list');
+
 

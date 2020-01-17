@@ -10,7 +10,7 @@ class Plant extends Model
 {
     protected $table = 'plants';
     protected $fillable = [
-        'user_id', 'name', 'media',
+        'user_id', 'name', 'media', 'diary',
     ];
 
     public function usuario(){

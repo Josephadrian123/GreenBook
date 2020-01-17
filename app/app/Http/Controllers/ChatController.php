@@ -40,12 +40,17 @@ class ChatController extends Controller
         }
     }
 
-    public function list(){
+    public function list(Request $request){
 
           $user = Auth::user();
+          $receiver = User::whereId($request->receiver)->first();
     
 
-         $messages = DB::table('messages')->where('sender_id', $user->id)->orWhere('receiver_id', $user->id)->get();
+         $messages = DB::table('messages')->where([
+                ['sender_id', $user->id], ['receiver_id', $receiver->id]
+                ])->orWhere([
+                    ['receiver_id', $user->id], ['sender_id', $receiver->id]
+                    ])->get();
          
 
           foreach ($messages as $msg) {

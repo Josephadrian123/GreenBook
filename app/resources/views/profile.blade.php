@@ -435,7 +435,12 @@
                                                     <div class='card card-post col-md-5'>
                                                     <div class='card-header row'>
                                                     <div class="row ml-auto">
-                                                    <a class='nav-link titulo row' href="#" style='border: none; outline-style: none;'>{{$plant['name']}}</a>
+                                                    <form method="get" action="{{ route('diary') }}">
+                                                    
+                                                    
+                                                    <input type="hidden" value="{{ $plant['id'] }}" name="id"/>
+                                                    <button type="submit" class='nav-link titulo row' style='border: none; outline-style: none; background-color: inherit;'>{{$plant['name']}}</button>
+                                                    </form>
                                                     </div>
                                                     
                                                     <div class=" ml-auto mb-auto">

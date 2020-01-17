@@ -4,24 +4,8 @@
 @csrf
  <script>
     
-    var timerI = null;
-    var timerR = false;
+    var timerI = setInterval("lista()", 3000);
     
-
-    function para(){
-        
-        if(timerR){
-        clearTimeout(timerI);
-        timerR = false;
-        }
-
-    }
-
-    function comeca(){
-        para();
-        lista();
-    }
-
     function lista(){
         $.ajaxSetup({
   headers: {
@@ -31,6 +15,7 @@
         $.ajax({
             
             url:"{{ url('/list') }}",
+            data: "receiver={{ $receiver['id'] }}",
             cache: false,
             success: function(textStatus){
                 
@@ -38,22 +23,14 @@
                 $("#lista").animate({scrollTop: $('#lista').prop("scrollHeight")}, 0);
                 
             },
-            error: function() {
-                
+            error: function() {     
         }
         })
-        timerI = setTimeout("lista()", 1000);
-        timerR = true;
-        
         
     }
     
-
-    $(document).ready(function(){
-        comeca();
-        
-        
-        
+    $(document).ready(function(){   
+        lista();   
     });
 
 
@@ -65,7 +42,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header titulo">{{ $receiver['name'] }}</div>
+                <div class="card-header titulo"><a class="nav-link"href="profile?id={{ $receiver['id'] }}"><img src="{{ $receiver['foto'] }}">  {{ $receiver['name'] }} </a></div>
 
                 <div class="card-body">
                     @if (session('status'))

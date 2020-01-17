@@ -18,6 +18,7 @@ class CreatePlantsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->string('media')->default('./../resources/img/plants/semfoto.svg');
+            $table->longText('diary')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
