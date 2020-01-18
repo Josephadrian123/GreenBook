@@ -32,6 +32,8 @@ Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::post('/addPlant', 'ProfileController@addPlant')->name('addPlant');
 Route::post('/diaryUpdate', 'DiaryController@diaryUpdate')->name('diaryUpdate');
 Route::get('/unknown_profile', 'UnknownProfileController@index')->name('unknownProfile');
+Route::post('/comment', 'HomeController@comment')->name('comment');
+Route::post('/removeComment', 'HomeController@removeComment')->name('removeComment');
 
 
 

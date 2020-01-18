@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Post;
+use App\Comment;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -60,6 +61,29 @@ class HomeController extends Controller
             Auth::user()->posts()->save($post);
 
         return redirect(route('home'));
+
+    }
+
+    public function comment(Request $request){
+        
+        $comment = new Comment;
+        $comment->post_id = $request->id;
+        $comment->user_id = Auth::id();
+        $comment->text = $request->comment;
+
+        $comment->save();
+
+        return redirect()->back();
+
+    }
+
+    public function removeComment(Request $request){
+        
+        $comment = Comment::find($request->id);
+
+        $comment->delete();
+
+        return redirect()->back();
 
     }
 }

@@ -66,12 +66,14 @@
                                                     
                                                     <div class='card card-post col'>
                                                     <div class='card-header row'>
-                                                        <div class='row col'>
+                                                    <div class="row col">
+                                                    <a class='row nav-link titulo' href="profile?id={{App\User::where('id', $post['user_id'])->get()->first()['id']}}" style='border: none; outline-style: none;'>
                                                             <img src="{{ App\User::where('id', $post['user_id'])->get()->first()['foto'] }}">
                                                         
-                                                            <a class='nav-link titulo' href="profile?id={{App\User::where('id', $post['user_id'])->get()->first()['id']}}" style='border: none; outline-style: none;'>{{App\User::where('id', $post['user_id'])->get()->first()['name']}}</a>
+                                                            &nbsp;{{App\User::where('id', $post['user_id'])->get()->first()['name']}}
                                                             
-                                                        </div>
+                                                        </a>
+                                                    </div>
                                                         @if(Auth::id() == App\User::where('id', $post['user_id'])->get()->first()['id'])
                                                         <div class="ml-3">
                                                             <form method="post" action="{{ route('removePost') }}">
@@ -87,11 +89,63 @@
                                                     <div class='card-content row'>
                                                     <img src="{{ $post['media'] }}" style='width: 100%;'>
                                                     </div>
-                                                    <div class='card-footer row'>
-                                                
-                                        aq eh o footer ok
-                                        </div>
+                                                    <div class='card-footer row justify-content-center'>
+                                                        <div class="row justify-content-center col-12">
+                                                        @if(App\Comment::where('post_id', $post['id'])->first())
+                                                        <a class="nav-link titulo" data-toggle="collapse" href="#commentCollapse{{ $post['id'] }}" role="button" aria-expanded="false" aria-controls="commentCollapse">
+                                                        <span class="badge badge-success badge-pill">{{ App\Comment::where('post_id', $post['id'])->get()->count() }}</span> Comment(s) ▼
+                                                        </a>
+                                                        @endif
+                                                        </div>
+
+                                                        <div class="row col-12">
+                                                        
+                                                    
+                                                        <div class="collapse col list-group" id="commentCollapse{{ $post['id'] }}">
+                                                        @if(App\Comment::where('post_id', $post['id'])->first())
+                                                        @foreach(App\Comment::where('post_id', $post['id'])->get() as $comment)
+                                                        <div class="list-group-item col">
+                                                            <div class="row col">
+                                                           <a href="profile?id={{App\User::where('id', $comment['user_id'])->get()->first()['id']}}" class="nav-link btn-sm">
+                                                           <img class="comment-img" src="{{ App\User::whereId($comment['user_id'])->get()->first()['foto'] }}"/>
+                                                            &nbsp;{{ App\User::whereId($comment['user_id'])->get()->first()['name'] }}
+                                                           </a>
+                                                           @if(Auth::id() == $comment['user_id'])
+                                                        <div class="row col justify-content-end">
+                                                            <form method="post" action="{{ route('removeComment') }}">
+                                                            @csrf
+                                                            <input type="hidden" name='id' value="{{ $comment['id'] }}"/>
+                                                            <button type="submit" class="close" data-dismiss="modal" aria-label="Fechar">
+                                                            <span aria-hidden="true">&times;</span>  </button>
+                                                            </form>
+                                                        </div>
+                                                        @endif
+                                                            </div>
+                                                            
+                                                           {{ $comment['text'] }}
+                                                           </div>
+                                                        @endforeach
+                                                        @endif
+
+                                                        </div>
+
+                                                        
+                                                        </div>
+                                                        
+                                                        <div class="row col">
+                                                        <form class="row col" method="post" action="{{ route('comment') }}">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{ $post['id'] }}"/>
+                                                        <input type="text" autocomplete="off" class="form-control col" name="comment" placeholder="Type a comment"></input>
+                                                        &nbsp;&nbsp;
+                                                        <input type="submit" value="&rang;&rang;" class="btn btn-outline-success">
+                                                        
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    </form>
                                                 </div>
+                                                
                                                 
                                                 <br>
                                            
@@ -100,10 +154,14 @@
                                         
                                         <div class='card col card-post'>
                                         <div class='card-header row'>
-                                            <div class='row col'>
-                                                <img src=" {{ App\User::where('id', $post['user_id'])->get()->first()['foto'] }}">
-                                                <a class='nav-link titulo' href="profile?id={{App\User::where('id', $post['user_id'])->get()->first()['id']}}" style='border: none; outline-style: none;'>{{ App\User::where('id', $post['user_id'])->get()->first()['name']}}</a>
-                                            </div>
+                                        <div class="row col">
+                                                    <a class='row nav-link titulo' href="profile?id={{App\User::where('id', $post['user_id'])->get()->first()['id']}}" style='border: none; outline-style: none;'>
+                                                            <img src="{{ App\User::where('id', $post['user_id'])->get()->first()['foto'] }}">
+                                                        
+                                                            &nbsp;{{App\User::where('id', $post['user_id'])->get()->first()['name']}}
+                                                            
+                                                        </a>
+                                                    </div>
                                             @if(Auth::id() == App\User::where('id', $post['user_id'])->get()->first()['id'])
                                             <div class="ml-3">
                                                 <form method="post" action="{{ route('removePost') }}">
@@ -116,9 +174,59 @@
                                             @endif
                                         </div>
                                         <div class="">{{ $post['text'] }}</div>
-                                        <div class='card-footer row'>
-                                        aq eh o footer ok
-                                        </div>
+                                        <div class='card-footer row justify-content-center'>
+                                        <div class="row justify-content-center col-12">
+                                                        @if(App\Comment::where('post_id', $post['id'])->first())
+                                                        <a class="nav-link titulo" data-toggle="collapse" href="#commentCollapse{{ $post['id'] }}" role="button" aria-expanded="false" aria-controls="commentCollapse">
+                                                        <span class="badge badge-success badge-pill">{{ App\Comment::where('post_id', $post['id'])->get()->count() }}</span> Comment(s) ▼
+                                                        </a>
+                                                        @endif
+                                                        </div>
+                                                        <div class="row col-12">
+                                                        
+                                                        
+                                                        <div class="collapse col list-group" id="commentCollapse{{ $post['id'] }}">
+                                                        @if(App\Comment::where('post_id', $post['id'])->first())
+                                                        @foreach(App\Comment::where('post_id', $post['id'])->get() as $comment)
+                                                        <div class="list-group-item col">
+                                                            <div class="row col">
+                                                           <a href="profile?id={{App\User::where('id', $comment['user_id'])->get()->first()['id']}}" class="nav-link btn-sm">
+                                                           <img class="comment-img" src="{{ App\User::whereId($comment['user_id'])->get()->first()['foto'] }}"/>
+                                                            &nbsp;{{ App\User::whereId($comment['user_id'])->get()->first()['name'] }}
+                                                           </a>
+                                                           @if(Auth::id() == $comment['user_id'])
+                                                        <div class="row col justify-content-end">
+                                                            <form method="post" action="{{ route('removeComment') }}">
+                                                            @csrf
+                                                            <input type="hidden" name='id' value="{{ $comment['id'] }}"/>
+                                                            <button type="submit" class="close" data-dismiss="modal" aria-label="Fechar">
+                                                            <span aria-hidden="true">&times;</span>  </button>
+                                                            </form>
+                                                        </div>
+                                                        @endif
+                                                            </div>
+                                                            
+                                                           {{ $comment['text'] }}
+                                                           </div>
+                                                        @endforeach
+                                                        @endif
+
+                                                        </div>
+
+                                                        </div>
+                                                        
+                                                        <div class="row col">
+                                                        <form class="row col" method="post" action="{{ route('comment') }}">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{ $post['id'] }}"/>
+                                                        <input type="text" autocomplete="off" class="form-control col" name="comment" placeholder="Type a comment"></input>
+                                                        &nbsp;&nbsp;
+                                                        <input type="submit" value="&rang;&rang;" class="btn btn-outline-success">
+                                                        
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    </form>
                                     </div>
                                     
                                     <br>

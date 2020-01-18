@@ -42,7 +42,13 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header titulo"><a class="nav-link"href="profile?id={{ $receiver['id'] }}"><img src="{{ $receiver['foto'] }}">  {{ $receiver['name'] }} </a></div>
+                <div class="card-header titulo">
+                    <div class="row col justify-content-center">
+                    <a class="nav-link"href="profile?id={{ $receiver['id'] }}">
+                        <img src="{{ $receiver['foto'] }}">  {{ $receiver['name'] }} 
+                    </a>
+                    </div>
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -53,15 +59,15 @@
                     
                     
 
-                    <div id='lista' class="col"></div>
+                    <div id='lista' class="col "></div>
                         <form id="form-chat" action="" method="POST" enctype="multipart/form-data" ajax="true">
                         @method('GET')
                         
                             <div class="col">
                                 <div class="input-group">
-                                    <input autocomplete='off' type="text" name="mensagem" id="mensagem" placeholder="Digite uma mensagem." class="form-control"/>&nbsp;&nbsp;
+                                    <input autocomplete='off' type="text" name="mensagem" id="mensagem" placeholder="Type a message" class="form-control"/>&nbsp;&nbsp;
                                     <span class="input-group-btn">
-                                        <input type="submit" value="&rang;&rang;" class="btn btn-dark">
+                                        <input type="submit" value="&rang;&rang;" class="btn btn-outline-success">
                                         <input type="hidden" name="env" value="envMsg">
                                     </span>
                                 </div>
