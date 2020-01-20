@@ -6,7 +6,7 @@
                 
                 
                 
-                <div class="row justify-content-center">
+                <div class="row justify-content-center home">
                     <div class="row" style="font-size: 100%">
                      <h1 style="color: white;">GreenBook<h1>
                     </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Message;
 use Illuminate\Support\Facades\DB;
 
 class ChatController extends Controller
@@ -40,6 +41,25 @@ class ChatController extends Controller
         }
     }
 
+    public function insertMessage(Request $request){
+        if(isset($request->env) && $request->env == "envMsg"){
+           $text = $request->mensagem;
+            
+            if(empty($text)){
+                
+            }else{
+
+                date_default_timezone_set('America/Recife');
+                 $message = new Message;
+                 $message->sender_id = Auth::id();
+                 $message->receiver_id = $request->receiver;
+                 $message->text = $text;
+                 $message->save();
+                
+            }
+        }
+    }
+
     public function list(Request $request){
 
           $user = Auth::user();
@@ -55,10 +75,10 @@ class ChatController extends Controller
 
           foreach ($messages as $msg) {
                   if($msg->sender_id == $user->id){
-                  echo "<div id='chat-right' align = 'right'><label class='msg'>".$msg->text."</label></div>";
+                  echo "<div id='chat-right' class = 'row'><small class='row col justify-content-end ml-auto titulo'>You</small><label class='msg'>".$msg->text."</label><small class='row col justify-content-end ml-auto'>".date('d-m-y \a\t g:i a', strtotime($msg->created_at))."</small></div>";
                   }else{
         
-                  echo "<div id='chat-left' align = 'left'><label class='msg'>".$msg->text."</label></div>";
+                  echo "<div id='chat-left' class = 'row'><small class='row col titulo'>".$receiver->name."</small><label class='msg'>".$msg->text."</label><small class='row col'>".date('d-m-y \a\t g:i a', strtotime($msg->created_at))."</small></div>";
                   }
         
              }

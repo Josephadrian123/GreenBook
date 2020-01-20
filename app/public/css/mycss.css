@@ -3,6 +3,10 @@ body{
     
 }
 
+.home{
+    margin-top: 20%;
+}
+
 a:not(.removeFile .fyp){
     color: #52871d !important;
 }
@@ -271,7 +275,7 @@ a:not(.removeFile .fyp){
 
 }
 
-input:not(.form-check-input){
+input:not(.form-check-input, .navInput){
     box-shadow: 5px 5px 5px #000;
 }
 
@@ -291,6 +295,7 @@ textarea:not(.diary){
     display: table;
     margin: 10px;
     margin-left: auto;
+    text-align: end;
 }
 
 #chat-left{
@@ -302,8 +307,17 @@ textarea:not(.diary){
     margin:10px;
 }
 
+#chat-left small{
+    color: rgb(119, 119, 119);
+}
+
+#chat-right small{
+    color: rgb(119, 119, 119);
+}
+
 .msg{
-    width: 9em;
+    min-width: 10em;
+    max-width: 20em;
     word-wrap: break-word;
 }
 
@@ -361,6 +375,14 @@ textarea:not(.diary){
     resize: none;
 }
 
+.plant-name{
+    
+    font-family: 'Handlee', cursive;
+    font-weight: bold;
+    align-self: top;
+    
+}
+
 .bt-diary{
     
     margin-top: -25px;
@@ -381,5 +403,7 @@ textarea:not(.diary){
     outline-style: none;
    
 }
+
+
 
 

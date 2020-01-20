@@ -331,36 +331,37 @@
                                                     <img src="{{ $post['media'] }}" style='width: 100%;'>
                                                     </div>
                                                     <div class='card-footer row justify-content-center'>
-                                                
-                                                    <div class="row justify-content-center col-12">
                                                         @if(App\Comment::where('post_id', $post['id'])->first())
+                                                        <div class="row  justify-content-center">
+                                                        
                                                         <a class="nav-link titulo" data-toggle="collapse" href="#commentCollapse{{ $post['id'] }}" role="button" aria-expanded="false" aria-controls="commentCollapse">
                                                         <span class="badge badge-success badge-pill">{{ App\Comment::where('post_id', $post['id'])->get()->count() }}</span> Comment(s) ▼
                                                         </a>
-                                                        @endif
+                                                        
                                                         </div>
+                                                        @endif
 
-                                                        <div class="row col-12">
+                                                        
                                                         
                                                     
-                                                        <div class="collapse col list-group" id="commentCollapse{{ $post['id'] }}">
+                                                        <div class="collapse row list-group" id="commentCollapse{{ $post['id'] }}" style="width:95%">
                                                         @if(App\Comment::where('post_id', $post['id'])->first())
                                                         @foreach(App\Comment::where('post_id', $post['id'])->get() as $comment)
                                                         <div class="list-group-item col">
-                                                            <div class="row col">
+                                                            <div class="row col-12">
                                                            <a href="profile?id={{App\User::where('id', $comment['user_id'])->get()->first()['id']}}" class="nav-link btn-sm">
                                                            <img class="comment-img" src="{{ App\User::whereId($comment['user_id'])->get()->first()['foto'] }}"/>
                                                             &nbsp;{{ App\User::whereId($comment['user_id'])->get()->first()['name'] }}
                                                            </a>
                                                            @if(Auth::id() == $comment['user_id'])
-                                                        <div class="row col justify-content-end">
-                                                            <form method="post" action="{{ route('removeComment') }}">
+                                                        
+                                                            <form method="post" class="col justify-content-end" action="{{ route('removeComment') }}">
                                                             @csrf
                                                             <input type="hidden" name='id' value="{{ $comment['id'] }}"/>
                                                             <button type="submit" class="close" data-dismiss="modal" aria-label="Fechar">
                                                             <span aria-hidden="true">&times;</span>  </button>
                                                             </form>
-                                                        </div>
+                                                       
                                                         @endif
                                                             </div>
                                                             
@@ -370,23 +371,22 @@
                                                         @endif
 
                                                         </div>
-
                                                         
-                                                        </div>
                                                         
-                                                        <div class="row col">
-                                                        <form class="row col" method="post" action="{{ route('comment') }}">
+                                                        <form method="post" class = "row col-12" action="{{ route('comment') }}">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{ $post['id'] }}"/>
-                                                        <input type="text" autocomplete="off" class="form-control col" name="comment" placeholder="Type a comment"></input>
-                                                        &nbsp;&nbsp;
-                                                        <input type="submit" value="&rang;&rang;" class="btn btn-outline-success">
+                                                        <input type="text" autocomplete="off" class="form-control" name="comment" placeholder="Type a comment"></input>
+                                                        </form>
                                                         
-                                                        </div>
+                                                       
                                                         
                                                     </div>
-                                                    </form>
+                                                    
+                                                    
                                                 </div>
+                                                
+                                                
                                                 
                                                 <br>
                                            
@@ -413,36 +413,38 @@
                                             @endif
                                         </div>
                                         <div class="">{{ $post['text'] }}</div>
-                                        <div class='card-footer row'>
-                                        <div class="row justify-content-center col-12">
+                                        <div class='card-footer row justify-content-center'>
                                                         @if(App\Comment::where('post_id', $post['id'])->first())
+                                                        <div class="row  justify-content-center">
+                                                        
                                                         <a class="nav-link titulo" data-toggle="collapse" href="#commentCollapse{{ $post['id'] }}" role="button" aria-expanded="false" aria-controls="commentCollapse">
                                                         <span class="badge badge-success badge-pill">{{ App\Comment::where('post_id', $post['id'])->get()->count() }}</span> Comment(s) ▼
                                                         </a>
-                                                        @endif
+                                                        
                                                         </div>
+                                                        @endif
 
-                                                        <div class="row col-12">
+                                                        
                                                         
                                                     
-                                                        <div class="collapse col list-group" id="commentCollapse{{ $post['id'] }}">
+                                                        <div class="collapse row list-group" id="commentCollapse{{ $post['id'] }}" style="width:95%">
                                                         @if(App\Comment::where('post_id', $post['id'])->first())
                                                         @foreach(App\Comment::where('post_id', $post['id'])->get() as $comment)
                                                         <div class="list-group-item col">
-                                                            <div class="row col">
+                                                            <div class="row col-12">
                                                            <a href="profile?id={{App\User::where('id', $comment['user_id'])->get()->first()['id']}}" class="nav-link btn-sm">
                                                            <img class="comment-img" src="{{ App\User::whereId($comment['user_id'])->get()->first()['foto'] }}"/>
                                                             &nbsp;{{ App\User::whereId($comment['user_id'])->get()->first()['name'] }}
                                                            </a>
                                                            @if(Auth::id() == $comment['user_id'])
-                                                        <div class="row col justify-content-end">
-                                                            <form method="post" action="{{ route('removeComment') }}">
+                                                        
+                                                            <form method="post" class="col justify-content-end" action="{{ route('removeComment') }}">
                                                             @csrf
                                                             <input type="hidden" name='id' value="{{ $comment['id'] }}"/>
                                                             <button type="submit" class="close" data-dismiss="modal" aria-label="Fechar">
                                                             <span aria-hidden="true">&times;</span>  </button>
                                                             </form>
-                                                        </div>
+                                                       
                                                         @endif
                                                             </div>
                                                             
@@ -452,25 +454,24 @@
                                                         @endif
 
                                                         </div>
-
                                                         
-                                                        </div>
                                                         
-                                                        <div class="row col">
-                                                        <form class="row col" method="post" action="{{ route('comment') }}">
+                                                        <form method="post" class = "row col-12" action="{{ route('comment') }}">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{ $post['id'] }}"/>
-                                                        <input type="text" autocomplete="off" class="form-control col" name="comment" placeholder="Type a comment"></input>
-                                                        &nbsp;&nbsp;
-                                                        <input type="submit" value="&rang;&rang;" class="btn btn-outline-success">
+                                                        <input type="text" autocomplete="off" class="form-control" name="comment" placeholder="Type a comment"></input>
+                                                        </form>
                                                         
-                                                        </div>
+                                                       
                                                         
                                                     </div>
-                                                    </form>
-                                    </div>
-                                    
-                                    <br>
+                                                    
+                                                    
+                                                </div>
+                                                
+                                                
+                                                
+                                                <br>
                                             @endif
                                
                                        

@@ -26,7 +26,32 @@
                     <div class="row col">
                     <img src="{{ $msg['foto'] }}">
                     <button class="titulo" style="color: inherit; background-color: inherit; border: none; outline-style: none;"> {{ $msg['name'] }}</button>
+                
                     </div>
+
+                    @if(App\Message::where([
+                ['sender_id', $user->id], ['receiver_id', $msg['id']]
+                ])->orWhere([
+                    ['receiver_id', $user->id], ['sender_id', $msg['id']]
+                    ])->get()->last()['sender_id'] == $user->id)
+                    You:
+                    @elseif(App\Message::where([
+                ['sender_id', $user->id], ['receiver_id', $msg['id']]
+                ])->orWhere([
+                    ['receiver_id', $user->id], ['sender_id', $msg['id']]
+                    ])->get()->last()['sender_id'] == $msg['id'])
+                    {{$msg['name']}}:
+                    @endif
+
+                    
+
+                     {{ App\Message::where([
+                ['sender_id', $user->id], ['receiver_id', $msg['id']]
+                ])->orWhere([
+                    ['receiver_id', $user->id], ['sender_id', $msg['id']]
+                    ])->get()->last()['text'] }}
+
+                    
                     </div>
                     </a>
     

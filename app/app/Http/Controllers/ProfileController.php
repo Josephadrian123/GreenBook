@@ -109,8 +109,10 @@ class ProfileController extends Controller
      */
     public function show(User $user)
     {
-        //
+    
     }
+
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -271,4 +273,6 @@ class ProfileController extends Controller
     
             return redirect(route('profile'));
     }
+
+    
 }

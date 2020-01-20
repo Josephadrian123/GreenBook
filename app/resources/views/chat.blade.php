@@ -4,7 +4,7 @@
 @csrf
  <script>
     
-    var timerI = setInterval("lista()", 3000);
+    setInterval("lista()", 1000);
     
     function lista(){
         $.ajaxSetup({
@@ -20,7 +20,7 @@
             success: function(textStatus){
                 
                 $("#lista").html(textStatus);
-                $("#lista").animate({scrollTop: $('#lista').prop("scrollHeight")}, 0);
+                
                 
             },
             error: function() {     
@@ -28,11 +28,44 @@
         })
         
     }
+
+
     
     $(document).ready(function(){   
-        lista();   
-    });
+        
+        lista();
+        
 
+        $("form[ajax=true]").submit(function(e) {
+            $.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+        
+        e.preventDefault();
+        
+        var form_data = $(this).serialize();
+        var form_url = $(this).attr("action");
+        var form_method = $(this).attr("method").toUpperCase();
+        
+        $.ajax({
+            url: form_url, 
+            type: form_method,      
+            data: form_data,     
+            cache: false,
+            success: function(){
+               lista();
+               
+            }
+                     
+        });    
+        $("#lista").animate({scrollTop: $('#lista').prop("scrollHeight")}, 1000);
+        $('form[ajax=true]').trigger("reset");
+    });   
+    setTimeout("$('#lista').animate({scrollTop: $('#lista').prop('scrollHeight')}, 500)", 500);
+    });
+    
 
     
 </script>
@@ -60,7 +93,7 @@
                     
 
                     <div id='lista' class="col "></div>
-                        <form id="form-chat" action="" method="POST" enctype="multipart/form-data" ajax="true">
+                        <form id="form-chat" action="{{ url('/insertMessage') }}" method="GET" enctype="multipart/form-data" ajax="true">
                         @method('GET')
                         
                             <div class="col">
@@ -69,28 +102,12 @@
                                     <span class="input-group-btn">
                                         <input type="submit" value="&rang;&rang;" class="btn btn-outline-success">
                                         <input type="hidden" name="env" value="envMsg">
+                                        <input type="hidden" name="receiver" value="{{ $receiver['id'] }}">
                                     </span>
                                 </div>
                             </div>
                         </form>
-                        @php
-                    if(isset($_POST['env']) && $_POST['env'] == "envMsg"){
-                        $text = $_POST['mensagem'];
                         
-                        if(empty($text)){
-                            
-                        }else{
-
-                            date_default_timezone_set('America/Sao_Paulo');
-                            $message = new App\Message;
-                            $message->sender_id = Auth::id();
-                            $message->receiver_id = $receiver['id'];
-                            $message->text = $text;
-                            $message->save();
-                            
-                        }
-                    }
-                    @endphp
                     </div>
                     
                     

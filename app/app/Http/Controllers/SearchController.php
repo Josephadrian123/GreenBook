@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\User;
-class GlossaryController extends Controller
+class SearchController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -22,9 +23,15 @@ class GlossaryController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $user = User::where('id', Auth::id())->first();
-        return view('glossary', compact('user'));
+        if($request->name){
+        $users = User::where('name', 'like', '%'.$request->name.'%')
+        ->get();
+
+        return view('search', ['users' => $users, 'query' => $request->name]);
+        } else return redirect()->back();
     }
+
+    
 }

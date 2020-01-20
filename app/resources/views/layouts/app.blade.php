@@ -56,14 +56,23 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/messages') }}">Messages</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/glossary') }}">Glossary</a>
-                        </li>
+                        
                         @endauth
                         
                     </ul>
-
+                    @auth
+                    <ul class="navbar-nav col-auto">
+                    <li class="nav-item">
+                        <form method="get" action="{{ route('search') }}">
+                        
+                        <input type="text" name="name" class="form-control navInput" placeholder="Search user">
+                        </form>
+                    </li>
+                    
+                    </ul>
+                    @endauth
                     <!-- Right Side Of Navbar -->
+                    
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
@@ -76,6 +85,7 @@
                                 </li>
                             @endif
                         @else
+                        
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

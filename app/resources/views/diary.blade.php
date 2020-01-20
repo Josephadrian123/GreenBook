@@ -14,7 +14,7 @@
                         </div>
                     @endif
                     <div class="row justify-content-center paper">
-                    <h4 class="titulo col offset-5 justify-content-center">{{ $plant['name'] }}</h4>
+                    <h4 class="titulo col offset-5 plant-name justify-content-center">{{ $plant['name'] }}</h4>
                     <form method="post" action="{{ route('diaryUpdate') }}">
                     @csrf 
                         <div class="paper-content">
