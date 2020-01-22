@@ -51,8 +51,8 @@ class HomeController extends Controller
         if(!empty($_FILES["media"]["tmp_name"])){
             $nome_temporario=$_FILES["media"]["tmp_name"];
             $nome_real=$_FILES["media"]["name"];
-            copy($nome_temporario,"./../resources/img/posts/$nome_real");
-            $caminho = "./../resources/img/posts/$nome_real";
+            copy($nome_temporario,"img/posts/$nome_real");
+            $caminho = "img/posts/$nome_real";
 
             $post->media = $caminho;
         }    

@@ -77,8 +77,8 @@ class ProfileController extends Controller
         if(!empty($_FILES["media"]["tmp_name"])){
             $nome_temporario=$_FILES["media"]["tmp_name"];
             $nome_real=$_FILES["media"]["name"];
-            copy($nome_temporario,"./../resources/img/posts/$nome_real");
-            $caminho = "./../resources/img/posts/$nome_real";
+            copy($nome_temporario,"img/posts/$nome_real");
+            $caminho = "img/posts/$nome_real";
 
             $post->media = $caminho;
         }    
@@ -168,8 +168,8 @@ class ProfileController extends Controller
     {
         $nome_temporario=$_FILES["imagem"]["tmp_name"];
         $nome_real=$_FILES["imagem"]["name"];
-        copy($nome_temporario,"./../resources/img/$nome_real");
-        $caminho = "./../resources/img/$nome_real";
+        copy($nome_temporario,"img/$nome_real");
+        $caminho = "img/$nome_real";
         $arr = array(
          "foto" => $caminho,
         );
@@ -181,7 +181,7 @@ class ProfileController extends Controller
     public function removePhoto()
     {
         
-        $caminho = "./../resources/img/semfoto.svg";
+        $caminho = "img/semfoto.svg";
         $arr = array(
          "foto" => $caminho,
         );
@@ -254,8 +254,8 @@ class ProfileController extends Controller
         if(!empty($_FILES["media"]["tmp_name"])){
             $nome_temporario=$_FILES["media"]["tmp_name"];
             $nome_real=$_FILES["media"]["name"];
-            copy($nome_temporario,"./../resources/img/plants/$nome_real");
-            $caminho = "./../resources/img/plants/$nome_real";
+            copy($nome_temporario,"img/plants/$nome_real");
+            $caminho = "img/plants/$nome_real";
     
             $plant->media = $caminho;
       

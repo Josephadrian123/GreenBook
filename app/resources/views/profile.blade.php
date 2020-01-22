@@ -19,7 +19,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-img">
-                           
+                        
                             <img src="{{ $user['foto'] }}" alt=""/>
                             @if($user['id'] == Auth::id())
                             <span data-toggle="modal" data-target="#changePhoto" class="file btn btn-lg btn-success col-md-4">
