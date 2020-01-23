@@ -8,6 +8,7 @@ Repository for the GreenBook project.
   
 ### Profile 
   Shows information about you or another user. Edit your profile, make posts, and follow other users.
+  ![alt text](https://user-images.githubusercontent.com/26861164/73033687-8e45bf80-3e21-11ea-9ce2-a942ac56abd0.png)
   
 ### Diary
   Save your plant's evolution.
