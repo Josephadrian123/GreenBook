@@ -34,6 +34,9 @@ Repository for the GreenBook project.
   Communicate with another user via direct messages.
   ![alt text](https://user-images.githubusercontent.com/26861164/73036132-462a9b00-3e29-11ea-8bbb-5e6a800fcc46.png)
   
+## Models
+  ![alt text](https://user-images.githubusercontent.com/26861164/73037177-d1596000-3e2c-11ea-8a50-b0b005b66f19.png)
+  
 ## Technologies
   PHP, Laravel, Docker.
   
