@@ -10,30 +10,31 @@ Repository for the GreenBook project.
 ### Profile 
   Shows information about you or another user. Edit your profile, make posts, and follow other users.
   ![alt text](https://user-images.githubusercontent.com/26861164/73033687-8e45bf80-3e21-11ea-9ce2-a942ac56abd0.png)<br>
-  ![alt text](https://user-images.githubusercontent.com/26861164/73036172-77a36680-3e29-11ea-9643-4e55a928dde5.png)
+  ![alt text](https://user-images.githubusercontent.com/26861164/184411806-007879d5-0297-4cd2-a131-ffefbc50ff69.png)
   
 ### Diary
   Save your plant's evolution.
-  ![alt text](https://user-images.githubusercontent.com/26861164/73035594-69ece180-3e27-11ea-93ca-1491e9a1819b.png)<br>
-  ![alt text](https://user-images.githubusercontent.com/26861164/73035606-825cfc00-3e27-11ea-9e98-af77e3893b9f.png)
+  ![alt text](https://user-images.githubusercontent.com/26861164/184411953-6ed0f5e6-07c7-4832-9c83-7bc0def68e29.png)<br>
+  ![alt text](https://user-images.githubusercontent.com/26861164/184412045-e8154fad-23a0-411c-97f7-7388aaeddcf7.png)
 
 ### Search
   Search users by their name.
-  ![alt text](https://user-images.githubusercontent.com/26861164/73035667-c5b76a80-3e27-11ea-8128-9ee423736294.png)
-  
+  ![alt text](https://user-images.githubusercontent.com/26861164/184412095-3144b67b-d73a-48b9-83dc-b6bd58422c50.png)
+
 ### Feed
   See the posts of those you follow, comment on them and make your own posts.
-  ![alt text](https://user-images.githubusercontent.com/26861164/73035707-eb447400-3e27-11ea-859d-92dc5b7773d6.png)<br>
-  ![alt text](https://user-images.githubusercontent.com/26861164/73035726-02836180-3e28-11ea-8f55-6a22ba0bb7ec.png)
+  ![alt text](https://user-images.githubusercontent.com/26861164/184412138-186ef140-c90f-4a65-b241-a5e49aabe70f.png)<br>
+  ![alt text](https://user-images.githubusercontent.com/26861164/184412181-75fabb5a-2c32-4350-88e1-754b6b25266b.png)
+
 
 ### Messages
   Your inbox.
-  ![alt text](https://user-images.githubusercontent.com/26861164/73036062-0499f000-3e29-11ea-8475-9799984abe31.png)
-  
+  ![alt text](https://user-images.githubusercontent.com/26861164/184412219-25e61451-71ad-4a80-b2c2-1a4d868b3dd1.png)
+
 ### Chat
   Communicate with another user via direct messages.
-  ![alt text](https://user-images.githubusercontent.com/26861164/73036132-462a9b00-3e29-11ea-8bbb-5e6a800fcc46.png)
-  
+  ![alt text](https://user-images.githubusercontent.com/26861164/184412249-9f9ff18c-384e-4099-9213-16002ac61952.png)
+
 ## Models
   ![alt text](https://user-images.githubusercontent.com/26861164/73037177-d1596000-3e2c-11ea-8a50-b0b005b66f19.png)
   
